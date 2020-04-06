@@ -42,11 +42,20 @@ $(document).ready(function() {
     $(".date").text(date);
     $('.version').text(pkg.productName + " Version: " + pkg.version);
     $(".author").text(pkg.author);
-    $('.repo').html("<button id='open-repo' type='button' class='btn btn-primary'>View Source Code</button>");
+    //$('.repo').html("<button id='open-repo' type='button' class='btn btn-primary'>View Source Code</button>");
+    $('.repo').html("<a href='#' id='open-repo'>"+pkg.repository+"</a>");
 
+
+    // Setup links for the user
     $('#open-repo').click(function(e){
         e.preventDefault();
-        shell.openExternal('https://github.com/cjerrington/net-check');
+        shell.openExternal(pkg.repository);
+
+    });
+
+    $('#help').click(function(e){
+        e.preventDefault();
+        shell.openExternal('https://github.com/cjerrington/net-check/issues/new/choose');
 
     });
 });
