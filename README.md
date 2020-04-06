@@ -23,11 +23,11 @@ Run Check
 
 At this time the releases are for Windows as that is my main developing platform and where I use this tool mostly; on Windows environments.
 
-[Release  v1.0.3](https://github.com/cjerrington/net-check/releases/tag/1.0.3)
+[Release  v1.0.4](https://github.com/cjerrington/net-check/releases/tag/1.0.4)
 
 ## Running Application
 
-first download and install dependencies, then start the app.
+First download and install dependencies, then start the app.
 
 ```
 git clone https://github.com/cjerrington/net-check.git
