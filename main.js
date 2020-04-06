@@ -8,13 +8,17 @@ const path = require('path')
 const config = require(path.join(__dirname, 'package.json'))
 const BrowserWindow = electron.BrowserWindow
 
-app.setName(config.productName)
+//app.SetName(config.productName)
 var mainWindow = null
 app.on('ready', function () {
   mainWindow = new BrowserWindow({
     backgroundColor: 'lightgray',
     title: config.productName,
     show: false,
+    center: true,
+    minWidth: 1000,
+    minHeight: 800,
+    icon: __dirname + '/app/icon.ico',
     webPreferences: {
       nodeIntegration: true,
       defaultEncoding: 'UTF-8'

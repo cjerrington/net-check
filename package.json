@@ -1,20 +1,30 @@
 {
-  "name": "bootstrap-example",
-  "productName": "Bootstrap Example",
-  "version": "1.0.0",
-  "description": "Demonstrates how to use Bootstrap and jQuery.",
+  "name": "net-check",
+  "productName": "Network Status Check",
+  "version": "1.0.2",
+  "description": "A desktop app to check the status of a hostname or URL and port. ",
   "main": "main.js",
   "repository": "https://github.com/patrickmoffitt/bootstrap-example",
-  "author": "Patrick K. Moffitt, CSM, M.A.",
+  "author": "Clayton Errington",
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "electron": "^8.2.0",
+    "electron-installer-windows": "^3.0.0",
+    "electron-packager": "^14.2.1"
+  },
   "scripts": {
     "start": "electron .",
-    "start-mac": "/Applications/Electron.app/Contents/MacOS/Electron ."
+    "start-mac": "/Applications/Electron.app/Contents/MacOS/Electron .",
+    "package-win": "electron-packager . net-check --overwrite --platform=win32 --arch=ia32 --icon=app/icon.ico --prune=true --out=release-builds",
+    "release": "electron-installer-windows --src release-builds/net-check-win32-ia32/ --dest release-builds/installers/"
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "jquery": "^3.2.1",
+    "bootstrap-icons": "^1.0.0-alpha3",
+    "is-port-reachable": "^3.0.0",
+    "jquery": "^3.4.1",
+    "moment": "^2.24.0",
+    "pkginfo": "^0.4.1",
     "popper.js": "^1.14.7",
     "tether": "^1.4.0"
   },
