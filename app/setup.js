@@ -1,6 +1,7 @@
 //const appVersion = require('electron').remote.app.getVersion();
 //const { version, productName, repository, author } = require('../package.json');
 const pkginfo = require('pkginfo')(module, 'productName','version', 'author', 'repository');
+const { shell } = require('electron')
 
 pkg = module.exports;
 
@@ -41,5 +42,11 @@ $(document).ready(function() {
     $(".date").text(date);
     $('.version').text(pkg.productName + " Version: " + pkg.version);
     $(".author").text(pkg.author);
-    $('.repo').html("<a href='"+pkg.repository+"' target='_blank'>"+pkg.repository+"</a>");
+    $('.repo').html("<button id='open-repo' type='button' class='btn btn-primary'>View Source Code</button>");
+
+    $('#open-repo').click(function(e){
+        e.preventDefault();
+        shell.openExternal('https://github.com/cjerrington/net-check');
+
+    });
 });
