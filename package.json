@@ -2,7 +2,7 @@
   "name": "net-check",
   "productName": "Network Status Check",
   "version": "1.0.5",
-  "description": "A desktop app to check the status of a hostname or URL and port. ",
+  "description": "A desktop app to check the status of a hostname or URL and port.",
   "main": "main.js",
   "repository": "https://github.com/cjerrington/net-check",
   "author": "Clayton Errington",
