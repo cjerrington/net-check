@@ -18,7 +18,9 @@ app.on('ready', function () {
     center: true,
     minWidth: 1000,
     minHeight: 800,
-    icon: __dirname + '/app/icon.ico',
+    height: 800,
+    width: 1000,
+    icon: path.join(__dirname, 'app', 'icon.ico'),
     webPreferences: {
       nodeIntegration: true,
       defaultEncoding: 'UTF-8'

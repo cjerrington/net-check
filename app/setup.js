@@ -27,6 +27,12 @@ $(document).ready(function() {
         e.preventDefault();
         $("#aboutModalCenter").modal('toggle');
     });
+
+    // Open Load URLs modal
+    $("#load-urls").on('click', function(e){
+        e.preventDefault();
+        $("#loadurlsModalCenter").modal('toggle');
+    });
     
     // TD content editable
     $(".edit").click(function(){
@@ -43,19 +49,18 @@ $(document).ready(function() {
     $('.version').text(pkg.productName + " Version: " + pkg.version);
     $(".author").text(pkg.author);
     //$('.repo').html("<button id='open-repo' type='button' class='btn btn-primary'>View Source Code</button>");
-    $('.repo').html("<a href='#' id='open-repo'>"+pkg.repository+"</a>");
+    $('.repo').html("<a href='"+pkg.repository+"' id='open-repo'>"+pkg.repository+"</a>");
 
 
-    // Setup links for the user
-    $('#open-repo').click(function(e){
+    // Pull link from the a tag and then open externally for the user
+    $('#open-repo').click('a[href^="http"]', function(e){
         e.preventDefault();
-        shell.openExternal(pkg.repository);
+        shell.openExternal(this.href);
 
     });
 
     $('#help').click(function(e){
         e.preventDefault();
         shell.openExternal('https://github.com/cjerrington/net-check/issues/new/choose');
-
     });
 });
