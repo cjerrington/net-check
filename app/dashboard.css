@@ -68,3 +68,17 @@ h1 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
 }
+
+/* set cursor to default when hovering */
+a.navbar-brand{
+  cursor: default;
+}
+
+/* prevent a tags from click and dragging */
+a{
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}

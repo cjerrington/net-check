@@ -3,10 +3,9 @@ const fs = require('fs');
 const path = require('path');
 // for checking if ports are open
 var isPortReachable = require("is-port-reachable");
-
+var isReachable = require("is-reachable")
+ 
 $(document).ready(function() {
-
-    //$(".status").html(successState);
 
     $("#add_form").submit(function(e) {
         e.preventDefault();
@@ -32,16 +31,15 @@ $(document).ready(function() {
                 //remove row
                 $(this).parents("tr").remove();
             }
-
         });
 
         // Reset the row counts. 
         var i = 0; 
         $("tr").find("td:first").each(function (i) {
-        // For each TR find the first TD and replace it with the row count
-        // We should have a small enough list updating the whole table 
-        // shouldn't be an issue instead of only modifying the ones that are after
-        $(this).html(i + 1);
+            // For each TR find the first TD and replace it with the row count
+            // We should have a small enough list updating the whole table 
+            // shouldn't be an issue instead of only modifying the ones that are after
+            $(this).html(i + 1);
         });
     });
 
@@ -84,12 +82,40 @@ $(document).ready(function() {
         // For each row run the checks
         $('#urltable > tbody  > tr').each(function() {
             // Get hostname and port
-            var hostname = $(this).closest('tr').find('td:eq(2)').text();
+            var domain = $(this).closest('tr').find('td:eq(2)').text();
             var port = $(this).closest('tr').find('td:eq(3)').text();
             //console.log(hostname+":"+port);
 
-            // Start the check
             (async () => {
+                // Check if domain is valid first
+                valid = await isReachable(domain);
+                if(valid == true){
+                    //console.log("It's true!!");
+                    // Start the check for the port
+                    (async () => {
+                        // use the hostname and port from the table. 
+                        var cmd = await isPortReachable(port, {host: domain});
+                        if(cmd == true){
+                            // if port works, send to console
+                            console.log(domain+":"+port+" is open.");
+                            // and set the staus to success
+                            $(this).closest('tr').find('td:eq(4)').html(successState);
+                        }
+                        else{
+                            // if port is not open, send to console
+                            console.log(domain+":"+port+" is closed.");
+                            // and set the status to failed
+                            $(this).closest('tr').find('td:eq(4)').html(failState);
+                        }
+                        //=> true
+                    })();
+                }else{
+                    console.log(domain + " is not reachable")
+                    $(this).closest('tr').find('td:eq(4)').html(failState);
+                }
+            })();
+            // Start the check
+            /* (async () => {
                 // use the hostname and port from the table. 
                 var cmd = await isPortReachable(port, {host: hostname});
                 if(cmd == true){
@@ -105,7 +131,77 @@ $(document).ready(function() {
                     $(this).closest('tr').find('td:eq(4)').html(failState);
                 }
                 //=> true
-            })();
+            })(); */
         });
+    });
+
+    // Open Load URLs modal
+    $("#load-urls").click(function(e){
+        e.preventDefault();
+        $("#loadurlsModalCenter").modal('toggle');
+    });
+
+    // Create table from JSON
+
+    //implementation
+    //https://stackoverflow.com/questions/12694135/how-to-append-json-array-data-to-html-table-tbody/31810319#31810319
+    function jsonToHtmlTable(jsonObj, selector) {
+        addColumns(jsonObj, selector);
+        addRows(jsonObj, selector);
+    }
+
+    function addColumns(jsonObj, selector) {
+        if (!$.isArray(jsonObj) || jsonObj.length < 1)
+            return;
+        var object = jsonObj[0];
+        var theadHtml = "";
+        for (var property in object) {
+            if (object.hasOwnProperty(property))
+                theadHtml += "<th>" + property + "</th>";
+        }
+        $(selector + ' thead tr').html(theadHtml);
+    }
+
+    function addRows(jsonObj, selector) {
+        var tbody = $(selector + ' tbody');
+        $.each(jsonObj, function (i, d) {
+            var row = '<tr>';
+            $.each(d, function (j, e) {
+                row += '<td>' + e + '</td>';
+            });
+            row += '</tr>';
+            tbody.append(row);
+        });
+    }
+
+    $('#loadurls_submit').click(function(){
+        // try to load our urls.json file and update our table. 
+        try {
+            const contents = fs.readFileSync(path.join(__dirname, "urls.json"), 'utf8')
+            var jsonContent = JSON.parse(contents)
+            
+            jsonToHtmlTable(jsonContent, '#urltable');
+            // Reset the row counts. 
+            var i = 0; 
+            $("tr").find("td:first").each(function (i) {
+                // For each TR find the first TD and replace it with the row count
+                // We should have a small enough list updating the whole table 
+                // shouldn't be an issue instead of only modifying the ones that are after
+                $(this).html(i + 1);
+            });
+            // Set the html for the select box, edit attributes, and default status
+            $('#urltable > tbody  > tr').each(function() {
+                // Add input box
+                $(this).closest('tr').find('td:eq(1)').html(`<input type="checkbox" name="record"></input>`);
+                // Add Unknown state
+                $(this).closest('tr').find('td:eq(4)').html(unknownState);
+                // set content editable state
+                $(this).closest('tr').find('td:eq(2)').addClass("edit").attr("contentEditable","true");;
+                $(this).closest('tr').find('td:eq(3)').addClass("edit").attr("contentEditable","true");;
+            });
+            //console.log(data)
+          } catch (err) {
+            console.error(err)
+          }
     });
 });

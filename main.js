@@ -47,6 +47,7 @@ app.on('ready', function () {
   })
 
   mainWindow.onbeforeunload = (e) => {
+    //
     // Prevent Command-R from unloading the window contents.
     e.returnValue = false
   }

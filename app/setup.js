@@ -27,12 +27,6 @@ $(document).ready(function() {
         e.preventDefault();
         $("#aboutModalCenter").modal('toggle');
     });
-
-    // Open Load URLs modal
-    $("#load-urls").on('click', function(e){
-        e.preventDefault();
-        $("#loadurlsModalCenter").modal('toggle');
-    });
     
     // TD content editable
     $(".edit").click(function(){
