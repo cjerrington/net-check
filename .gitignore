@@ -28,6 +28,9 @@ coverage
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 release-builds
+_site
+.jekyll-cache
+Gemfile.lock
 
 # Dependency directories
 node_modules
