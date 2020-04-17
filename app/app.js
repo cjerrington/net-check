@@ -17,7 +17,7 @@ $(document).ready(function() {
         var port = $("#port").val();
         var markup = "<tr><td>" + rowCount + "</td><td><input type='checkbox' name='record'></td><td class='edit' contenteditable='true'>" + url + "</td><td class='edit'  contenteditable='true'>" + port + "</td><td class='status'><img src='assets/icons/question-circle.svg' role='img' alt='' width='16' height='16' title='Unknown'></td></tr>";
 
-        if(url.length !==0 || port.length !==0){
+        if((url.length !==0) || (port.length !==0)){
             $("table tbody").append(markup);
         }else{
             $("#invalidinput").modal('toggle')
