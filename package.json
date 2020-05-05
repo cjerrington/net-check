@@ -1,30 +1,37 @@
 {
   "name": "net-check",
-  "productName": "Network Status Check",
-  "version": "1.0.6",
+  "productName": "Network-Status-Check",
+  "version": "1.0.7",
   "description": "A desktop app to check the status of a hostname or URL and port.",
   "main": "main.js",
   "repository": "https://github.com/cjerrington/net-check",
   "author": "Clayton Errington",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^8.2.0",
-    "electron-installer-windows": "^3.0.0",
-    "electron-packager": "^14.2.1"
+    "@electron-forge/cli": "^6.0.0-beta.50",
+    "@electron-forge/maker-deb": "^6.0.0-beta.50",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.50",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.50",
+    "@electron-forge/maker-wix": "^6.0.0-beta.51",
+    "@electron-forge/maker-zip": "^6.0.0-beta.50",
+    "electron": "^8.2.0"
   },
   "scripts": {
-    "start": "electron .",
+    "start": "electron-forge start",
     "start-mac": "/Applications/Electron.app/Contents/MacOS/Electron .",
     "package-win": "electron-packager . net-check --overwrite --platform=win32 --arch=ia32 --icon=app/icon.ico --prune=true --out=release-builds",
     "release": "electron-installer-windows --src release-builds/net-check-win32-ia32/ --dest release-builds/installers/ --icon app/icon.ico",
-    "build": "npm run package-win && npm run release"
+    "build": "npm run package-win && npm run release",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
     "bootstrap-icons": "^1.0.0-alpha3",
+    "electron-squirrel-startup": "^1.0.0",
     "is-port-reachable": "^3.0.0",
     "is-reachable": "^4.0.0",
-    "jquery": "^3.4.1",
+    "jquery": ">=3.5.0",
     "moment": "^2.24.0",
     "pkginfo": "^0.4.1",
     "popper.js": "^1.14.7",
@@ -34,5 +41,61 @@
     "globals": [
       "$"
     ]
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "./app/icon.ico"
+      },
+      "electronPackagerConfig": {
+        "icon": "./app/icon.ico",
+        "asar": true
+      },
+      "electronWinstallerConfig": {
+        "name": "Net Check",
+        "noMsi": false,
+        "author": "Clayton Errington",
+        "exe": "Net-Check.exe",
+        "description": "A desktop app to check the status of a hostname or URL and port.",
+        "iconUrl": "./app/icon.ico"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-wix",
+          "config": {
+            "ui": {
+              "chooseDirectory": true
+            }
+          }
+        },
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "net-check",
+            "icon": "./app/icon.ico",
+            "setupIcon": "./app/icon.ico"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin",
+            "linux",
+            "win32"
+          ],
+          "config": {
+            "name": "net-check"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }
