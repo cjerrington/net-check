@@ -23,7 +23,7 @@ Run Check
 
 At this time the releases are for Windows as that is my main developing platform and where I use this tool mostly; on Windows environments.
 
-[View Releases](https://github.com/cjerrington/net-check/releases)
+[View Releases](https://github.com/cjerrington/net-check/releases/latest)
 
 ## Running Application
 
@@ -38,14 +38,11 @@ npm start
 
 ## Creating Releases
 
-We will need to package first, then we can create the installer if needed.
+Electron Forge allows us to make builds based on our operating system we are running from. Linux (Debian) and Windows 10 tested.
 
 ```bash
-npm run package-win
-npm run release
+npm run make
 ```
-
-Now we can use the build command `npm run build` and this will run our package-win then release commands.
 
 You can check websites like google.com, github.com, or any URL you need and the port. It is best to use the FQDN for local addresses or use the hostnames IP instead.
 
