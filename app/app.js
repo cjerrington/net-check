@@ -82,39 +82,40 @@ $(document).ready(function() {
         // For each row run the checks
         $('#urltable > tbody  > tr').each(function() {
             // Get hostname and port
-            var domain = $(this).closest('tr').find('td:eq(2)').text();
-            var port = $(this).closest('tr').find('td:eq(3)').text();
-            //console.log(hostname+":"+port);
+            var myDomain = $(this).closest('tr').find('td:eq(2)').text();
+            var myPort = $(this).closest('tr').find('td:eq(3)').text();
+            //console.log(myDomain+":"+myPort);
 
             (async () => {
                 // Check if domain is valid first
-                valid = await isReachable(domain);
+                valid = await isReachable(myDomain);
                 if(valid == true){
-                    //console.log("It's true!!");
+                    console.log(myDomain + " exists");
                     // Start the check for the port
                     (async () => {
                         // use the hostname and port from the table. 
-                        var cmd = await isPortReachable(port, {host: domain});
+                        var cmd = await isPortReachable(myPort, {host: myDomain});
                         if(cmd == true){
                             // if port works, send to console
-                            console.log(domain+":"+port+" is open.");
+                            console.log(myDomain+":"+myPort+" is open.");
                             // and set the staus to success
                             $(this).closest('tr').find('td:eq(4)').html(successState);
                         }
                         else{
                             // if port is not open, send to console
-                            console.log(domain+":"+port+" is closed.");
+                            console.log(myDomain+":"+myPort+" is closed.");
                             // and set the status to failed
                             $(this).closest('tr').find('td:eq(4)').html(failState);
                         }
                         //=> true
                     })();
                 }else{
-                    console.log(domain + " is not reachable")
+                    console.log(myDomain + " is not reachable")
                     $(this).closest('tr').find('td:eq(4)').html(failState);
                 }
             })();
-            // Start the check
+
+            // Start the check old way
             /* (async () => {
                 // use the hostname and port from the table. 
                 var cmd = await isPortReachable(port, {host: hostname});

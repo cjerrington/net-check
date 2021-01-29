@@ -19,8 +19,8 @@ if(curpage === "index"){
 //title = productName;
 $(document).ready(function() {
     // Set title window
-    document.title = pkg.productName;
-    $(".navbar-brand").text(pkg.productName);
+    document.title = "Network Status Check";
+    $(".navbar-brand").text("Network Status Check");
     
     // Open About modal
     $("#about").on('click', function(e){

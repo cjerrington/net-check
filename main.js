@@ -7,6 +7,7 @@ const os = require('os')
 const path = require('path')
 const config = require(path.join(__dirname, 'package.json'))
 const BrowserWindow = electron.BrowserWindow
+// const { autoUpdater } = require('electron-updater');
 
 //app.SetName(config.productName)
 var mainWindow = null
@@ -56,5 +57,3 @@ app.on('ready', function () {
     mainWindow = null
   })
 })
-
-app.on('window-all-closed', () => { app.quit() })
